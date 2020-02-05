@@ -1,0 +1,34 @@
+[
+  {
+    "symbol": "PETR4",
+    "maturityDate": "2020-05-05"
+  },
+  {
+    "symbol": "VALE5",
+    "maturityDate": "2020-04-04"
+  },
+  {
+    "symbol": "MGLU3",
+    "maturityDate": "2020-01-31"
+  },
+  {
+    "symbol": "AMZN2",
+    "maturityDate": "2020-12-31"
+  },
+  {
+    "symbol": "GOGL4",
+    "maturityDate": "2020-10-20"
+  },
+  {
+    "symbol": "NBNK4",
+    "maturityDate": "2020-11-15"
+  },
+  {
+    "symbol": "BHIA3",
+    "maturityDate": "2020-09-08"
+  },
+  {
+    "symbol": "BNDE3",
+    "maturityDate": "2020-07-07"
+  }
+]
