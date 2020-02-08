@@ -22,7 +22,7 @@ public class InstrumentJsonRepository {
             String json = ResourceUtil.getContentAsString(JSON_DATASOURCE_NAME);
             return JSONUtil.parseAsList(json, Instrument.class);
         } catch (IOException | URISyntaxException e) {
-            logger.warn("Problema ao extrair instrumentos do datasource {}", JSON_DATASOURCE_NAME, e);
+            logger.warn("It was not possible to extract instruments from datasource {}", JSON_DATASOURCE_NAME, e);
         }
         return Collections.emptyList();
     }
