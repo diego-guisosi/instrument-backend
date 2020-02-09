@@ -5,17 +5,19 @@ import br.com.b3.instrument.backend.controller.model.InstrumentResponse;
 import br.com.b3.instrument.backend.service.InstrumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/instruments")
 public class InstrumentController {
 
     @Autowired
     private InstrumentService instrumentService;
 
-    @GetMapping("/instruments")
+    @GetMapping
     public List<InstrumentResponse> getAll() {
         return instrumentService.findAllSortedByMaturityDate()
                 .stream()
