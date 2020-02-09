@@ -1,4 +1,4 @@
-package br.com.b3.instrument.backend.domain;
+package br.com.b3.instrument.backend.data.json.model;
 
 import java.util.Objects;
 

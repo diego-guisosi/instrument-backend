@@ -1,19 +1,24 @@
-package br.com.b3.instrument.backend.domain;
+package br.com.b3.instrument.backend.data.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Instrument {
+@Entity
+@Table(name = "tbl_instr")
+public class InstrumentJPA {
 
+    @Id
+    @Column(name = "instr_id")
     private Long id;
 
+    @Column(name = "instr_symbol")
     private String symbol;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Column(name = "instr_mat_date")
     private LocalDate maturityDate;
 
     public Long getId() {
@@ -44,23 +49,23 @@ public class Instrument {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Instrument that = (Instrument) o;
-        return Objects.equals(symbol, that.symbol) &&
+        InstrumentJPA that = (InstrumentJPA) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(symbol, that.symbol) &&
                 Objects.equals(maturityDate, that.maturityDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, maturityDate);
+        return Objects.hash(id, symbol, maturityDate);
     }
 
     @Override
     public String toString() {
-        return "Instrument{" +
+        return "InstrumentJPA{" +
                 "id=" + id +
                 ", symbol='" + symbol + '\'' +
                 ", maturityDate=" + maturityDate +
                 '}';
     }
-
 }

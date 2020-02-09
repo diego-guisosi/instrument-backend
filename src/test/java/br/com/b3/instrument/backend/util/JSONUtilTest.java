@@ -1,6 +1,6 @@
 package br.com.b3.instrument.backend.util;
 
-import br.com.b3.instrument.backend.domain.Car;
+import br.com.b3.instrument.backend.data.json.model.Car;
 import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.net.URISyntaxException;

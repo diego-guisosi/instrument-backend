@@ -1,4 +1,4 @@
-package br.com.b3.instrument.backend.domain;
+package br.com.b3.instrument.backend.data.json.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class HistoricalPrice {
+public class HistoricalPriceJSON {
 
     private String symbol;
 
@@ -34,7 +34,7 @@ public class HistoricalPrice {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HistoricalPrice that = (HistoricalPrice) o;
+        HistoricalPriceJSON that = (HistoricalPriceJSON) o;
         return Objects.equals(symbol, that.symbol) &&
                 Arrays.equals(series, that.series);
     }
@@ -48,7 +48,7 @@ public class HistoricalPrice {
 
     @Override
     public String toString() {
-        return "HistoricalPrice{" +
+        return "HistoricalPriceJSON{" +
                 "symbol='" + symbol + '\'' +
                 ", series=" + Arrays.toString(series) +
                 '}';

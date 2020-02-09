@@ -1,7 +1,7 @@
 package br.com.b3.instrument.backend;
 
-import br.com.b3.instrument.backend.domain.HistoricalPrice;
-import br.com.b3.instrument.backend.domain.Instrument;
+import br.com.b3.instrument.backend.data.json.model.HistoricalPriceJSON;
+import br.com.b3.instrument.backend.data.json.model.InstrumentJSON;
 import br.com.b3.instrument.backend.util.JSONUtil;
 import br.com.b3.instrument.backend.util.ResourceUtil;
 
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class SQLFromJSONHelperApplication {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
-        List<Instrument> instruments = extractEntities("instruments.json", Instrument.class);
+        List<InstrumentJSON> instruments = extractEntities("instruments.json", InstrumentJSON.class);
         print(instruments,
                 instrument -> String.format("INSERT INTO tbl_instr (instr_id, instr_symbol, instr_mat_date) " +
                                 "VALUES (%d, '%s', parsedatetime('%s', 'yyyy-MM-dd'));",
@@ -26,8 +26,8 @@ public class SQLFromJSONHelperApplication {
         System.out.println();
         System.out.println();
 
-        Map<String, Long> instrumentIdBySymbol = instruments.stream().collect(Collectors.toMap(Instrument::getSymbol, Instrument::getId));
-        List<HistoricalPrice> historicalPrices = extractEntities("prices.json", HistoricalPrice.class);
+        Map<String, Long> instrumentIdBySymbol = instruments.stream().collect(Collectors.toMap(InstrumentJSON::getSymbol, InstrumentJSON::getId));
+        List<HistoricalPriceJSON> historicalPrices = extractEntities("prices.json", HistoricalPriceJSON.class);
         print(historicalPrices, price -> {
             Long instrumentId = instrumentIdBySymbol.get(price.getSymbol());
             return Arrays.stream(price.getSeries())
