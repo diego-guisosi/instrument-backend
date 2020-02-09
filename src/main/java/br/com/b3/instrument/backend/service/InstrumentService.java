@@ -1,7 +1,7 @@
 package br.com.b3.instrument.backend.service;
 
 import br.com.b3.instrument.backend.data.jpa.model.InstrumentJPA;
-import br.com.b3.instrument.backend.data.jpa.repository.InstrumentJpaRepository;
+import br.com.b3.instrument.backend.data.jpa.repository.InstrumentJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public class InstrumentService {
 
     @Autowired
-    private InstrumentJpaRepository instrumentRepository;
+    private InstrumentJPARepository instrumentRepository;
 
     public List<InstrumentJPA> findAllSortedByMaturityDate(){
         return instrumentRepository.findAllOrderByMaturityDateAsc();

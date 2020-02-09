@@ -12,9 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class InstrumentJsonRepository {
+public class InstrumentJSONRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(InstrumentJsonRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(InstrumentJSONRepository.class);
     private static final String JSON_DATASOURCE_NAME = "instruments.json";
 
     public List<InstrumentJSON> findAll() {

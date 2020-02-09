@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface InstrumentJpaRepository extends CrudRepository<InstrumentJPA, Long> {
+public interface InstrumentJPARepository extends CrudRepository<InstrumentJPA, Long> {
 
     @Query("select i from InstrumentJPA i order by i.maturityDate asc")
     List<InstrumentJPA> findAllOrderByMaturityDateAsc();

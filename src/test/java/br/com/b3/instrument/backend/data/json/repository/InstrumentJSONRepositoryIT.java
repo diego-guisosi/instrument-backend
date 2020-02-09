@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-class InstrumentJsonRepositoryIT {
+class InstrumentJSONRepositoryIT {
 
     @Autowired
-    private InstrumentJsonRepository instrumentJsonRepository;
+    private InstrumentJSONRepository instrumentJsonRepository;
 
     @Test
     void givenInstrumentsJsonFileWhenFindAllThenReturnAllInstruments() {

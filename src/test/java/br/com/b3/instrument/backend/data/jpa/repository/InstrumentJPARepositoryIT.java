@@ -13,10 +13,10 @@ import java.util.List;
 
 @SpringBootTest
 @TestPropertySource(properties = "spring.flyway.enabled=false")
-class InstrumentJpaRepositoryIT {
+class InstrumentJPARepositoryIT {
 
     @Autowired
-    private InstrumentJpaRepository instrumentJpaRepository;
+    private InstrumentJPARepository instrumentJpaRepository;
 
     @BeforeEach
     void setup(){
