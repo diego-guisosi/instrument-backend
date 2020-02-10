@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ public class HistoricalPriceResponse {
 
     private String symbol;
 
-    private List<Serie> series;
+    private List<Serie> series = new ArrayList<>();
 
     public String getSymbol() {
         return symbol;

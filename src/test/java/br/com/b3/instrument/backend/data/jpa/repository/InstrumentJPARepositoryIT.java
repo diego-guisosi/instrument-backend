@@ -2,26 +2,22 @@ package br.com.b3.instrument.backend.data.jpa.repository;
 
 import br.com.b3.instrument.backend.data.jpa.model.InstrumentJPA;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootTest
 @TestPropertySource(properties = "spring.flyway.enabled=false")
+@Sql(scripts = "/sql/delete_all_data.sql")
 class InstrumentJPARepositoryIT {
 
     @Autowired
     private InstrumentJPARepository instrumentJpaRepository;
-
-    @BeforeEach
-    void setup(){
-        instrumentJpaRepository.deleteAll();
-    }
 
     @Test
     void givenInstrumentsWithDifferentMaturityDatesWhenFindAllThenReturnInstrumentsSortedByMaturityDate(){

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface InstrumentJPARepository extends CrudRepository<InstrumentJPA, Long> {
 
-    @Query("select i from InstrumentJPA i order by i.maturityDate asc")
+    @Query("SELECT i FROM InstrumentJPA i ORDER BY i.maturityDate ASC")
     List<InstrumentJPA> findAllOrderByMaturityDateAsc();
 
 }

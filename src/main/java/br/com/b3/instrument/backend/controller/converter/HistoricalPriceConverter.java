@@ -1,17 +1,46 @@
 package br.com.b3.instrument.backend.controller.converter;
 
 import br.com.b3.instrument.backend.controller.model.HistoricalPriceResponse;
+import br.com.b3.instrument.backend.data.jpa.model.HistoricalPriceJPA;
 import br.com.b3.instrument.backend.data.json.model.HistoricalPriceJSON;
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HistoricalPriceConverter {
 
-    static final String ERROR_MESSAGE_MANDATORY_PRICE = "Price can not be null";
+    static final String ERROR_MESSAGE_MANDATORY_PRICE = "Price(s) can not be null";
+
+    public static HistoricalPriceResponse convert(HistoricalPriceJPA price){
+        return convert(Collections.singletonList(price));
+    }
+
+    public static HistoricalPriceResponse convert(List<HistoricalPriceJPA> prices){
+        Assert.notNull(prices, ERROR_MESSAGE_MANDATORY_PRICE);
+
+        return prices.stream().reduce(new HistoricalPriceResponse(),
+
+                (response, historicalPriceJPA) -> {
+                    HistoricalPriceResponse.Serie serie = new HistoricalPriceResponse.Serie();
+                    serie.setDate(historicalPriceJPA.getDate());
+                    serie.setPrice(historicalPriceJPA.getPrice());
+
+                    response.getSeries().add(serie);
+                    response.setSymbol(historicalPriceJPA.getInstrument().getSymbol());
+
+                    return response;
+
+                }, (accumulator, historicalPriceResponse) -> {
+                    HashSet<HistoricalPriceResponse.Serie> uniqueSeries = new HashSet<>(accumulator.getSeries());
+                    uniqueSeries.addAll(historicalPriceResponse.getSeries());
+
+                    accumulator.setSeries(new ArrayList<>(uniqueSeries));
+                    accumulator.setSymbol(historicalPriceResponse.getSymbol());
+
+                    return accumulator;
+                });
+    }
 
     public static HistoricalPriceResponse convert(HistoricalPriceJSON price){
         Assert.notNull(price, ERROR_MESSAGE_MANDATORY_PRICE);
