@@ -1,18 +1,17 @@
 package br.com.b3.instrument.backend.util;
 
 import br.com.b3.instrument.backend.data.json.model.Car;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
 
 class JSONUtilTest {
 
-    private static final String JSON_RESOURCE_NAME = "cars.json";
+    private static final String JSON_RESOURCE_NAME_LIST = "cars.json";
+    private static final String JSON_RESOURCE_NAME_SINGLE_TYPE = "car.json";
 
     private static final int EXPECTED_CARS_QUANTITY = 2;
 
@@ -25,9 +24,9 @@ class JSONUtilTest {
     @Test
     void givenBothNullWhenParseAsListThenReturnEmptyList() throws IOException {
 
-        List<Object> cars = JSONUtil.parseAsList(null, null);
+        List<Object> objects = JSONUtil.parseAsList(null, null);
 
-        assertTrue(cars.isEmpty());
+        Assertions.assertThat(objects).isEmpty();
 
     }
 
@@ -36,39 +35,79 @@ class JSONUtilTest {
 
         List<Car> cars = JSONUtil.parseAsList(null, Car.class);
 
-        assertTrue(cars.isEmpty());
+        Assertions.assertThat(cars).isEmpty();
 
     }
 
     @Test
     void givenNullClassWhenParseAsListThenReturnEmptyList() throws IOException, URISyntaxException {
 
-        String jsonString = ResourceUtil.getContentAsString(JSON_RESOURCE_NAME);
+        String jsonString = ResourceUtil.getContentAsString(JSON_RESOURCE_NAME_LIST);
 
         List<Car> cars = JSONUtil.parseAsList(jsonString, null);
 
-        assertTrue(cars.isEmpty());
+        Assertions.assertThat(cars).isEmpty();
 
     }
 
     @Test
-    void givenDataAndClassWhenParseFromBytesThenReturnOptionalEmpty() throws IOException, URISyntaxException {
+    void givenDataAndClassWhenParseAsListThenReturnNonEmptyList() throws IOException, URISyntaxException {
 
-        String jsonString = ResourceUtil.getContentAsString("cars.json");
+        String jsonString = ResourceUtil.getContentAsString(JSON_RESOURCE_NAME_LIST);
 
         List<Car> cars = JSONUtil.parseAsList(jsonString, Car.class);
 
-        assertEquals(EXPECTED_CARS_QUANTITY, cars.size());
+        Assertions.assertThat(cars)
+                .hasSize(EXPECTED_CARS_QUANTITY)
+                .extracting("name", "color")
+                .contains(
+                        Assertions.tuple(FERRARI_NAME, FERRARI_COLOR),
+                        Assertions.tuple(PORSCHE_NAME, PORSCHE_COLOR)
+                );
 
-        Set<String> carNames = cars.stream().map(Car::getName).collect(Collectors.toSet());
-        assertEquals(EXPECTED_CARS_QUANTITY, carNames.size());
-        assertTrue(carNames.contains(FERRARI_NAME));
-        assertTrue(carNames.contains(PORSCHE_NAME));
+    }
 
-        Set<String> carColors = cars.stream().map(Car::getColor).collect(Collectors.toSet());
-        assertEquals(EXPECTED_CARS_QUANTITY, carColors.size());
-        assertTrue(carColors.contains(FERRARI_COLOR));
-        assertTrue(carColors.contains(PORSCHE_COLOR));
+    @Test
+    void givenBothNullWhenParseAsSingleTypeThenReturnOptionalEmpty() throws IOException {
+
+        Optional<Object> optional = JSONUtil.parseAsSingleType(null, null);
+
+        Assertions.assertThat(optional).isNotPresent();
+
+    }
+
+    @Test
+    void givenNullJsonStringWhenParseAsSingleTypeThenReturnOptionalEmpty() throws IOException {
+
+        Optional<Car> optionalCar = JSONUtil.parseAsSingleType(null, Car.class);
+
+        Assertions.assertThat(optionalCar).isNotPresent();
+
+    }
+
+    @Test
+    void givenNullClassWhenParseAsSingleTypeThenReturnOptionalEmpty() throws IOException, URISyntaxException {
+
+        String jsonString = ResourceUtil.getContentAsString(JSON_RESOURCE_NAME_SINGLE_TYPE);
+
+        Optional<Object> optionalCar = JSONUtil.parseAsSingleType(jsonString, null);
+
+        Assertions.assertThat(optionalCar).isNotPresent();
+
+    }
+
+    @Test
+    void givenDataAndClassWhenParseAsSingleTypeThenReturnParsedType() throws IOException, URISyntaxException {
+
+        String jsonString = ResourceUtil.getContentAsString(JSON_RESOURCE_NAME_SINGLE_TYPE);
+
+        Optional<Car> optionalCar = JSONUtil.parseAsSingleType(jsonString, Car.class);
+
+        Assertions.assertThat(optionalCar)
+                .isPresent()
+                .get()
+                .extracting("name", "color")
+                .contains(FERRARI_NAME, FERRARI_COLOR);
 
     }
 

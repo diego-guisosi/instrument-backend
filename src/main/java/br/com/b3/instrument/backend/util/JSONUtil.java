@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class JSONUtil {
 
@@ -25,6 +26,17 @@ public class JSONUtil {
 
     }
 
+    public static <T> Optional<T> parseAsSingleType(String jsonString, Class<T> classOfJsonType) throws IOException {
 
+        if(Objects.isNull(jsonString) || Objects.isNull(classOfJsonType)){
+            return Optional.empty();
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+        return Optional.ofNullable(objectMapper.readValue(jsonString, classOfJsonType));
+
+    }
 
 }
